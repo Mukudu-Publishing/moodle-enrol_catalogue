@@ -17,13 +17,13 @@
 /**
  * Version file
  *
- * @package   enrol_catalogue
- * @copyright 2019 - 2021 Mukudu Ltd - Bham UK
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    enrol_catalogue
+ * @copyright  2021 Mukudu Publishing
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020061503;
-$plugin->requires  = 2020061500;    // Requires M3.9.
+$plugin->version   = 2021051702;
+$plugin->requires  = 2021051700;    // Requires Moodle 3.11
 $plugin->component = 'enrol_catalogue';

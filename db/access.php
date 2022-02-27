@@ -15,12 +15,13 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin capabilities file
+ * Capabilities file
  *
- * @package   enrol_catalogue
- * @copyright 2019 - 2021 Mukudu Ltd - Bham UK
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    enrol_catalogue
+ * @copyright  2021 Mukudu Publishing
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
@@ -33,7 +34,7 @@ $capabilities = array(
             'manager' => CAP_ALLOW,
         )
     ),
-
+    
     /* Manage enrolments of users. */
     'enrol/catalogue:manage' => array(
         'captype' => 'write',
@@ -43,8 +44,8 @@ $capabilities = array(
             'editingteacher' => CAP_ALLOW,
         )
     ),
-
-    /* Unenrol anybody (including self) */
+    
+    /* Unenrol anybody (including self) – */
     'enrol/catalogue:unenrol' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,

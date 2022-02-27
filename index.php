@@ -25,14 +25,15 @@
 require_once(__DIR__ . '/../../config.php');
 
 require_login(); // Ensure the user is authenticated.
+global $DB, $USER, $PAGE, $OUTPUT;
 
 $errmsg = '';
 if (optional_param('action', '', PARAM_TEXT) == 'enrolme') {
-
+    
     // Get course id - we require this parameter.
     $courseid = required_param('courseid', PARAM_INT);
     $coursecontext = context_course::instance($courseid, MUST_EXIST);
-
+    
     // Find the student role id.
     $studentroleid = 0;
     $courseroles = get_all_roles($coursecontext);
@@ -43,15 +44,17 @@ if (optional_param('action', '', PARAM_TEXT) == 'enrolme') {
         }
     }
     if ($studentroleid) {
+        
+        // Get enrol plugin instance in course - could have used enrol_get_instances().
+        $enrolinstances = enrol_get_instances($courseid, true);
+        foreach ($enrolinstances as $instance) {
+            if ($instance->enrol == 'catalogue') {
+                break;
+            }
+        }
+        
         // Do the enrolment here.
         $enrolplugin = enrol_get_plugin('catalogue');
-        // Get enrol plugin instance in course - could have used enrol_get_instances().
-        $instance = $DB->get_record('enrol', array(
-            'courseid' => $courseid,
-            'status' => ENROL_INSTANCE_ENABLED,
-            'enrol' => 'catalogue'
-        )
-            );
         $enrolplugin->enrol_user($instance, $USER->id, $studentroleid);
         // Check- enrol user does not return results.
         if (is_enrolled($coursecontext)) {
@@ -81,10 +84,13 @@ if ($errmsg) {
 }
 
 // Is our plugin enabled?
-$enabledplugins = explode(',' , $CFG->enrol_plugins_enabled);
-if (in_array('catalogue', $enabledplugins)) {
-    // Get all enabled instances of the plugins.
+$enabledplugins= enrol_get_plugins(true);  // From the Enrolment API
+
+if (in_array('catalogue', array_keys($enabledplugins))) {
+    
+    // Get all enabled instances of the plugins - NO API functionality to do this.
     $instances = $DB->get_records('enrol', array('enrol' => 'catalogue', 'status' => ENROL_INSTANCE_ENABLED), 'courseid');
+    
     if (empty($instances)) {
         // No courses in the catalogue.
         echo html_writer::tag('h3', get_string('nocoursesincat', 'enrol_catalogue'));
@@ -92,10 +98,10 @@ if (in_array('catalogue', $enabledplugins)) {
         // Set up the enrolment request for later.
         $enrolurl = $PAGE->url;
         $enrolurl->param('action', 'enrolme');
-
+        
         // Get all the user's course enrolments.
         $myenrolments = enrol_get_all_users_courses($USER->id);
-
+        
         $catcourses = new html_table(); // Html table.
         foreach ($instances as $instance) {
             // Is the user enrolled already?
@@ -116,7 +122,7 @@ if (in_array('catalogue', $enabledplugins)) {
                 }
             }
         }
-
+        
         if (count($catcourses->data)) { // Any data?
             echo html_writer::tag('h3', get_string('catalogheader2', 'enrol_catalogue'));
             echo html_writer::table($catcourses);

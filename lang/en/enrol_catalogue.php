@@ -15,17 +15,14 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * English Language file
+ * English Language  file
  *
- * @package   enrol_catalogue
- * @copyright 2019 - 2021 Mukudu Ltd - Bham UK
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    enrol_catalogue
+ * @copyright  2021 Mukudu Publishingcourseurl);
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 $string['pluginname'] = 'Catalogue Enrolment';
-
 $string['catalogue:config'] = 'Configure Catalogue Enrolment';
 $string['catalogue:manage'] = 'Manage the Catalogue Enrolments';
 $string['catalogue:unenrol'] = 'Catalogue Enrolment Unenrol';
@@ -37,4 +34,3 @@ $string['nocoursesincat'] = 'There are currently no courses available in the cat
 $string['enrolinvite'] = 'Enrol On this course';
 $string['nostudentrole'] = 'Cannot enrol as a student on the selected course';
 $string['failedenrol'] = 'Sorry, failed to enrol you on the selected course';
-
